@@ -11,7 +11,7 @@ class Easy(object):
 
         self.flags = ""
         self._literal = []
-        self.groups_used = 0
+        self._groups_used = 0
         self.clear()
 
     def clear(self):
@@ -46,12 +46,17 @@ class Easy(object):
                 self._not_from != "" or
                 self._like != ""
             ):
+                print "Flushing.."
                 capture_literal = "" if self._capture else "?:"
                 quantity_literal = self.getQuantityLiteral()
                 character_literal = self.getCharacterLiteral()
                 reluctant_literal = "?" if self._reluctant else ""
                 self._literal.append("(" + capture_literal + "(?:" + character_literal + ")" + quantity_literal + reluctant_literal + ")");
+                print self._literal
                 self.clear();
+        else:
+            print "Not flushing!"
+
         return
 
     def getQuantityLiteral(self):
@@ -109,16 +114,31 @@ class Easy(object):
 
     def incrementGroupNumbering(self, literal, increment):
         """
-        TODO!!!
         """
         if increment > 0:
-            return literal
+            def repl(groupReference):
+                groupNumber = int(groupReference[2:]) + increment;
+                return int(groupReference[0:2]) + groupNumber;
+
+            return re.sub(r'/[^\\]\\\d+/g', repl, literal)
         return literal
 
-    def getRegExp(self):
+    def getRegex(self):
         self.flush()
-        r = re.compile("".join(self._literal), self.flags)
-        return r
+        joined =  "".join(self._literal)
+
+        if self.flags != "":
+            if 'm' in self.flags:
+                flags = re.M
+            if 'i' in self.flags:
+                flags = re.I
+            if 'g' in self.flags:
+                print "G flag."
+                flags = re.G
+            compiled = re.compile(joined, flags)
+        else:
+            compiled = re.compile(joined)
+        return compiled
 
     def addFlag(self, flag):
         """
@@ -401,7 +421,31 @@ class Easy(object):
         """
         TODO!
         """
-        return s.replace("/([.*+?^=!:${}()|\[\]\/\\])/g", "\\$1")
+        print "Sanitizing"
+        return re.sub(r'/([.*+?^=!:${}()|\[\]\/\\])/g', '\\$1', s)
 
-import pdb
-pdb.set_trace()
+try:
+    #reg = Easy().find("$")#.min(1).digits().then(".").digit().digit().getRegex()
+    # reg = Easy().find("$").getRegex()
+
+    # print reg.match("$10.00")
+    # print reg.match("$10.XY")
+    # print reg.pattern
+
+    reg = Easy().startOfLine().exactly(1).of("p").getRegex()
+
+    test = "p"
+    print re.findall(reg, test)
+
+    test = "qp"
+    print re.findall(reg, test)
+
+    #reg = Easy().startOfLine().getRegex()
+    print reg.pattern
+
+except Exception, e:
+    print e
+    import pdb
+    pdb.set_trace()
+
+
