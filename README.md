@@ -8,7 +8,16 @@ The world's most gangsta regular expressions library.
 
 _easy-expressions_ is a python regular expressions library with a 'python for humans' philsophy.
 
+Currently in early alpha. More info soon.
+
+## Installation
+
+    pip install easy-expressions
+
 ## Examples
+
+```python
+from easy_expressions import Easy
 
 regex = Easy 
   .find("$")
@@ -19,6 +28,7 @@ regex = Easy
   .getRegex();
 
 regex.findall("$10.00");
+```
 
 ## Inspiration
 
