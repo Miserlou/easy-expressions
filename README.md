@@ -1,19 +1,32 @@
-# Easy
+![Easy does it!](http://i.imgur.com/N7uilEZ.png)
 
-## Really, really easy regular expressions.
+# easy-expressions 
+
+The world's most gangsta regular expressions library.
+
+## About
+
+_easy-expressions_ is a python regular expressions library with a 'python for humans' philsophy.
 
 ## Examples
 
-regex = easy 
+regex = Easy 
   .find("$")
   .min(1).digits()
   .then(".")
   .digit()
   .digit()
-  .getRegExp();
+  .getRegex();
 
-regex.test("$10.00"); // true
+regex.findall("$10.00");
 
 ## Inspiration
 
-https://github.com/thebinarysearchtree/regexpbuilderjs
+Regexes are hard when they should be easy.
+
+I had this idea while watching Straight Outta Compton. Turns out [@thebinarysearchtree](https://github.com/thebinarysearchtree/) had already [implemented it in JS](https://github.com/thebinarysearchtree/regexpbuilderjs), so this is essentially a port of that.
+
+## License
+
+MIT, 2015.
+
