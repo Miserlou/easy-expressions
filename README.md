@@ -29,9 +29,9 @@ regex.findall("$10.00");
 
 ## About
 
-_easy-expressions_ is a python regular expressions library with a _(Python for Humans)[https://speakerdeck.com/kennethreitz/python-for-humans]_ philsophy.
+_easy-expressions_ is a python regular expressions library with a (Python for Humans)[https://speakerdeck.com/kennethreitz/python-for-humans] philsophy.
 
-Currently in early alpha. More info soon.
+Currently in alpha. More info soon.
 
 ## Installation
 
@@ -58,6 +58,10 @@ regex.findall("$10.00");
 Regexes are hard when they should be easy.
 
 I had this idea while watching Straight Outta Compton. Turns out [@thebinarysearchtree](https://github.com/thebinarysearchtree/) had already [implemented it in JS](https://github.com/thebinarysearchtree/regexpbuilderjs), so this is essentially a port of that.
+
+## Contributing 
+
+This software is still quite young and I'm certain there are still bugs in it. If you find bugs or want new features included, please create a new Issue and send a pull request, along with an accompanying test. Thanks!
 
 ## Other Easy Projects
 
