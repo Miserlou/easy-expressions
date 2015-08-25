@@ -1,4 +1,4 @@
-!Other Easy Projects[Easy does it!](http://i.imgur.com/N7uilEZ.png)
+![Easy does it!](http://i.imgur.com/N7uilEZ.png)
 
 # easy-expressions [![Build Status](https://travis-ci.org/Miserlou/easy-expressions.svg)](https://travis-ci.org/Miserlou/easy-expressions)
 
