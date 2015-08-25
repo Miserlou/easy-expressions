@@ -1,4 +1,4 @@
-![Easy does it!](http://i.imgur.com/N7uilEZ.png)
+!Other Easy Projects[Easy does it!](http://i.imgur.com/N7uilEZ.png)
 
 # easy-expressions [![Build Status](https://travis-ci.org/Miserlou/easy-expressions.svg)](https://travis-ci.org/Miserlou/easy-expressions)
 
@@ -29,7 +29,7 @@ regex.findall("$10.00");
 
 ## About
 
-_easy-expressions_ is a python regular expressions library with a (Python for Humans)[https://speakerdeck.com/kennethreitz/python-for-humans] philsophy.
+_easy-expressions_ is a python regular expressions library with a [Python for Humans](https://speakerdeck.com/kennethreitz/python-for-humans) philsophy.
 
 Currently in alpha. More info soon.
 
