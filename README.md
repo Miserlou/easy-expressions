@@ -29,7 +29,7 @@ regex.findall("$10.00");
 
 ## About
 
-_easy-expressions_ is a python regular expressions library with a [Python for Humans](https://speakerdeck.com/kennethreitz/python-for-humans) philsophy.
+_easy-expressions_ is a python regular expressions library with a [Python for Humans](https://speakerdeck.com/kennethreitz/python-for-humans) philosophy.
 
 Currently in alpha. More info soon.
 
@@ -52,6 +52,8 @@ regex = Easy() /
 
 regex.findall("$10.00");
 ```
+
+More coming soon. Perhaps you'd like to contribute one?
 
 ## Inspiration
 
