@@ -21,6 +21,9 @@ class TestEasy(unittest.TestCase):
         self.assertNotEqual(assertme, None)
 
     def test_startOfLine(self):
+        """
+        Start of Line test.
+        """
 
         reg = Easy().startOfLine().exactly(1).of("p").getRegex()
 
@@ -29,6 +32,31 @@ class TestEasy(unittest.TestCase):
 
         test = "qp"
         self.assertTrue(len(re.findall(reg, test)) == 0)
+
+    def test_dollars_example(self):
+        """
+        The first example from the README.
+        """
+
+        reg = Easy() \
+                .find("$") \
+                .min(1) \
+                .digits() \
+                .then(".") \
+                .digit() \
+                .digit() \
+                .getRegex()
+
+        test = "$10.00"
+        self.assertTrue(len(re.findall(reg, test)) == 1)
+
+        test = "$1X.00"
+        self.assertFalse(len(re.findall(reg, test)) == 1)
+
+    # def test_endOfLine(self):
+
+    #     one_p = Easy().exactly(1).of("p")
+    #     regex = Easy().startOfLine().either(one_p).getRegex()#.orr(Easy().exactly(2).of("q")).getRegex();#.endOfLine().getRegex();
 
 if __name__ == '__main__':
     unittest.main()

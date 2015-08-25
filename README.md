@@ -1,8 +1,31 @@
 ![Easy does it!](http://i.imgur.com/N7uilEZ.png)
 
-# easy-expressions 
+# easy-expressions [![Build Status](https://travis-ci.org/Miserlou/easy-expressions.svg)](https://travis-ci.org/Miserlou/easy-expressions)
 
 The world's most gangsta regular expressions library.
+
+It turns this..
+
+```python
+
+regex = re.compile(r'(?:(?:\$){1,1})(?:(?:(?:\d)){1,})(?:(?:\.){1,1})(?:\d)(?:\d)')
+```
+
+into this!
+
+```python
+from easy_expressions import Easy
+
+regex = Easy 
+  .find("$")
+  .min(1).digits()
+  .then(".")
+  .digit()
+  .digit()
+  .getRegex();
+
+regex.findall("$10.00");
+```
 
 ## About
 

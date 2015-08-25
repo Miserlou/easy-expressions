@@ -1,3 +1,10 @@
+"""
+__init__.py
+
+Contains most of the Easy logic.
+
+"""
+
 import re
 
 class Easy(object):
@@ -46,16 +53,12 @@ class Easy(object):
                 self._not_from != "" or
                 self._like != ""
             ):
-                print "Flushing.."
                 capture_literal = "" if self._capture else "?:"
                 quantity_literal = self.getQuantityLiteral()
                 character_literal = self.getCharacterLiteral()
                 reluctant_literal = "?" if self._reluctant else ""
                 self._literal.append("(" + capture_literal + "(?:" + character_literal + ")" + quantity_literal + reluctant_literal + ")");
-                print self._literal
                 self.clear();
-        else:
-            print "Not flushing!"
 
         return
 
@@ -104,12 +107,13 @@ class Easy(object):
         self.flush()
         return "".join(self._literal)
 
-    def combineGroupNumberingAndGetLiteral(self, r):
+    def combineGroupNumberingAndGetLiteral(self, regex):
         """
 
         """
-        literal = self.incrementGroupNumbering(r.getLiteral(), self._groups_used)
-        self._groups_used = self._groups_used + r._groups_used
+
+        literal = self.incrementGroupNumbering(regex.getLiteral(), self._groups_used)
+        self._groups_used = self._groups_used + regex._groups_used
         return literal
 
     def incrementGroupNumbering(self, literal, increment):
@@ -120,7 +124,8 @@ class Easy(object):
                 groupNumber = int(groupReference[2:]) + increment;
                 return int(groupReference[0:2]) + groupNumber;
 
-            return re.sub(r'/[^\\]\\\d+/g', repl, literal)
+            subbed = re.sub(r'/[^\\]\\\d+/g', repl, literal)
+            return subbed
         return literal
 
     def getRegex(self):
@@ -133,7 +138,6 @@ class Easy(object):
             if 'i' in self.flags:
                 flags = re.I
             if 'g' in self.flags:
-                print "G flag."
                 flags = re.G
             compiled = re.compile(joined, flags)
         else:
@@ -207,8 +211,10 @@ class Easy(object):
         self._either = self.combineGroupNumberingAndGetLiteral(r)
         return self
 
-    def Or(self, r):
+    def orr(self, r):
         """
+        I hate the naming of this, but it chokes with the natural 'or'.
+
         """
         if type(r) == type(''):
             return self.orLike(Easy().exactly(1).of(r))
@@ -419,31 +425,9 @@ class Easy(object):
 
     def _sanitize(self, s):
         """
-        TODO!
+        Escape special chars.
+
+        I'm not sure if this is a satisfactory approach compared to the original: "/([.*+?^=!:${}()|\[\]\/\\])/g
+
         """
-        print "Sanitizing"
-        return re.sub(r'/([.*+?^=!:${}()|\[\]\/\\])/g', '\\$1', s)
-
-try:
-    #reg = Easy().find("$")#.min(1).digits().then(".").digit().digit().getRegex()
-    # reg = Easy().find("$").getRegex()
-
-    # print reg.match("$10.00")
-    # print reg.match("$10.XY")
-    # print reg.pattern
-
-    reg = Easy().startOfLine().exactly(1).of("p").getRegex()
-
-    test = "p"
-    print re.findall(reg, test)
-
-    test = "qp"
-    print re.findall(reg, test)
-
-    #reg = Easy().startOfLine().getRegex()
-    print reg.pattern
-
-except Exception, e:
-    print e
-
-
+        return re.escape(s)
