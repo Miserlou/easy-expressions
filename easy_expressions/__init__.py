@@ -128,22 +128,6 @@ class Easy(object):
             return subbed
         return literal
 
-    def getRegex(self):
-        self.flush()
-        joined =  "".join(self._literal)
-
-        if self.flags != "":
-            if 'm' in self.flags:
-                flags = re.M
-            if 'i' in self.flags:
-                flags = re.I
-            if 'g' in self.flags:
-                flags = re.G
-            compiled = re.compile(joined, flags)
-        else:
-            compiled = re.compile(joined)
-        return compiled
-
     def addFlag(self, flag):
         """
         If we don't have the flag already, add it.
@@ -423,6 +407,10 @@ class Easy(object):
         self._like = self.combineGroupNumberingAndGetLiteral(r)
         return self
 
+    ##
+    #  re usage and convenience methods.
+    ##
+
     def _sanitize(self, s):
         """
         Escape special chars.
@@ -431,3 +419,43 @@ class Easy(object):
 
         """
         return re.escape(s)
+
+    def getRegex(self):
+        self.flush()
+        joined =  "".join(self._literal)
+
+        if self.flags != "":
+            if 'm' in self.flags:
+                flags = re.M
+            if 'i' in self.flags:
+                flags = re.I
+            if 'g' in self.flags:
+                flags = re.G
+            compiled = re.compile(joined, flags)
+        else:
+            compiled = re.compile(joined)
+        return compiled
+
+    def test(self, test):
+        """
+        For an Easy, given a test string, does this findall == 1?
+        """
+        reg = self.getRegex()
+        if len(re.findall(reg, test)) == 0:
+            return False
+        else:
+            return True
+
+    def match(self, match):
+        """
+        Convenience wrapper for re's match function.
+        """
+        reg = self.getRegex()
+        return re.match(reg, match)
+
+    def search(self, search):
+        """
+        Convenience wrapper for re's search function.
+        """
+        reg = self.getRegex()
+        return re.search(reg, search)
