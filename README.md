@@ -16,22 +16,20 @@ into this!
 ```python
 from easy_expressions import Easy
 
-regex = Easy() / 
+easy = Easy() / 
   .find("$") /
   .min(1).digits() /
   .then(".") /
   .digit() /
-  .digit() /
-  .getRegex()
+  .digit()
 
+regex = easy.getRegex()
 regex.findall("$10.00");
 ```
 
 ## About
 
-_easy-expressions_ is a python regular expressions library with a [Python for Humans](https://speakerdeck.com/kennethreitz/python-for-humans) philosophy.
-
-Currently in alpha. More info soon.
+_easy-expressions_ is a python regular expressions library with a [Python for Humans](https://speakerdeck.com/kennethreitz/python-for-humans) philosophy. Rather than having to remember the complex regular expressions syntax, _easy-expressions_ allows you to write complicated regular expressions in natural English, so you'll get your pattern matches right the first time without any headache.
 
 ## Installation
 
@@ -39,21 +37,42 @@ Currently in alpha. More info soon.
 
 ## Examples
 
+#### Searching for dollar amounts
+
 ```python
 from easy_expressions import Easy
 
-regex = Easy() / 
+easy = Easy() / 
   .find("$") /
   .min(1).digits() /
   .then(".") /
   .digit() /
-  .digit() /
-  .getRegex()
+  .digit()
 
-regex.findall("$10.00");
+regex.test("$10.00"); # True
+regex.test("$XX.YZ"); # False
 ```
 
-More coming soon. Perhaps you'd like to contribute one?
+#### Searching for Credit Cards
+
+```python
+
+easy = Easy() \
+        .startOfLine() \
+        .exactly(4).digits() \
+        .then('-') \
+        .exactly(4).digits() \
+        .then('-') \
+        .exactly(4).digits() \
+        .then('-') \
+        .exactly(4).digits()
+
+input_s = "Hey Joe! The credit card number for the invoice is 4444-5555-6666-7777. Thanks!"
+easy.test(input_s) # True
+
+input_s = "Hey Joe! The credit card number for the invoice is 1-2-3-4. Thanks!"
+easy.test(input_s) # False
+```
 
 ## Inspiration
 

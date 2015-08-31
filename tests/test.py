@@ -13,6 +13,10 @@ from easy_expressions import Easy
 
 class TestEasy(unittest.TestCase):
 
+    ##
+    # Basic Tests
+    ##
+
     def test_test(self):
         self.assertTrue(True)
 
@@ -35,18 +39,9 @@ class TestEasy(unittest.TestCase):
         self.assertNotEqual(assertme, '')
         self.assertNotEqual(assertme, None)
 
-    def test_startOfLine(self):
-        """
-        Start of Line test.
-        """
-
-        reg = Easy().startOfLine().exactly(1).of("p").getRegex()
-
-        test = "p"
-        self.assertTrue(len(re.findall(reg, test)) == 1)
-
-        test = "qp"
-        self.assertTrue(len(re.findall(reg, test)) == 0)
+    ##
+    # Example Tests
+    ##
 
     def test_dollars_example(self):
         """
@@ -67,6 +62,93 @@ class TestEasy(unittest.TestCase):
 
         test = "$1X.00"
         self.assertFalse(len(re.findall(reg, test)) == 1)
+
+        test = "Dollar $ign. 12. Hello. 99."
+        self.assertFalse(len(re.findall(reg, test)) == 1)
+
+    def test_cc_example(self):
+        """
+        Searches for Credit Cards
+        """
+
+        easy = Easy() \
+                .digit().digit().digit().digit() \
+                .then('-') \
+                .digit().digit().digit().digit() \
+                .then('-') \
+                .digit().digit().digit().digit() \
+                .then('-') \
+                .digit().digit().digit().digit()
+
+        test_s = "4444-5555-6666-7777"
+        self.assertTrue(easy.test(test_s))
+
+        test_s = "444-555-666-777"
+        self.assertFalse(easy.test(test_s))
+
+        test_s = "Hey Joe! The credit card number for the invoice is 4444-5555-6666-7777. Thanks!"
+        self.assertTrue(easy.test(test_s))
+
+        test_s = "Hey JoeBot4444-5555-! Your PIN number is 2222-3333."
+        self.assertFalse(easy.test(test_s))
+
+    def test_names(self):
+        """
+        Searches for possible names.
+        """
+
+        easy = Easy() \
+                .upperCaseLetter() \
+                .lowerCaseLetters() \
+                .then(' ') \
+                .upperCaseLetter() \
+                .lowerCaseLetters() \
+
+        test_s = "The two rappers who really run the south are Paul Wall and Slim Thug."
+        self.assertTrue(easy.test(test_s))
+
+        test_s = "Philadelphia."
+        self.assertFalse(easy.test(test_s))
+
+        test_s = "Hey lol this isnt a name. Test."
+        self.assertFalse(easy.test(test_s))
+
+    def test_us_phone_numbers(self):
+        """
+        Searches for US phone numbers.
+        """
+
+        easy = Easy() \
+                .find('(') \
+                .digit().digit().digit() \
+                .then(')') \
+                .then(' ') \
+                .digit().digit().digit() \
+                .then('-') \
+                .digit().digit().digit().digit() \
+
+        test_s = "Hey Mike, give me a call at (123) 555-1234. Thanks!"
+        self.assertTrue(easy.test(test_s))
+
+        test_s = "Hey Joe! The credit card number for the invoice is 4444-5555-6666-7777. Thanks!"
+        self.assertFalse(easy.test(test_s))
+
+    ##
+    # Function Specific Tests
+    ##
+
+    def test_startOfLine(self):
+        """
+        Start of Line test.
+        """
+
+        reg = Easy().startOfLine().exactly(1).of("p").getRegex()
+
+        test = "p"
+        self.assertTrue(len(re.findall(reg, test)) == 1)
+
+        test = "qp"
+        self.assertTrue(len(re.findall(reg, test)) == 0)
 
     def test_exactly(self):
         """

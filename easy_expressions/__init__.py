@@ -150,6 +150,12 @@ class Easy(object):
 
     def globalMatch(self):
         """
+        Global matching.
+
+        THIS DOES NOT WORK.
+
+        TODO. FIX THIS.
+
         """
         self.addFlag('g')
         return self
@@ -429,8 +435,6 @@ class Easy(object):
                 flags = re.M
             if 'i' in self.flags:
                 flags = re.I
-            if 'g' in self.flags:
-                flags = re.G
             compiled = re.compile(joined, flags)
         else:
             compiled = re.compile(joined)
@@ -459,3 +463,4 @@ class Easy(object):
         """
         reg = self.getRegex()
         return re.search(reg, search)
+
